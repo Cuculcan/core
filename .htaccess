@@ -1,0 +1,38 @@
+DirectoryIndex index.php
+Options +FollowSymLinks
+
+RewriteEngine on
+Options All -Indexes
+
+# Заголовок Cache-Control
+<IfModule mod_headers.c>
+        Header append Cache-Control "public"
+</IfModule>
+ 
+# Заголовок Expires
+<IfModule mod_expires.c>
+        ExpiresActive On ExpiresDefault "access plus 1 hours"
+</IfModule>
+
+#------- uncoment for HTPPS --------------------------
+#RewriteCond %{HTTPS} off
+#RewriteRule ^(.*) https://%{HTTP_HOST}%{REQUEST_URI} [R,L]
+
+#RewriteRule ^(.*)$ - [E=PROTOCOL:http]
+#RewriteCond %{HTTPS} ^on$ [NC]
+#RewriteRule ^(.*)$ - [E=PROTOCOL:https]
+#RewriteCond %{SERVER_PORT} ^80$
+#-----------------------------------------------------
+
+# Redirect to version without WWW in URL
+RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+RewriteRule ^(.*)$ %{ENV:PROTOCOL}://%1%{REQUEST_URI} [R=301,L]
+RewriteCond %{HTTP_HOST} ^www\.(.*) [NC]
+RewriteRule ^(.*)$ %{ENV:PROTOCOL}://%1:%{SERVER_PORT}%{REQUEST_URI} [R=301,L]
+
+#RewriteCond %{REQUEST_FILENAME} !-f
+#RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_URI} !(.*)\.(css|js|htc|pdf|jpg|jpeg|gif|png|ico|txt|xml|woff|woff2|ttf|json)$ [NC]
+RewriteRule ^(.*)$ index.php?handler=$1 [QSA,L]
+
+# end
