@@ -95,7 +95,7 @@ class Request
     
     public function redirectTo($url){
         $server = $this->serverUrl();
-        header("Location: ".$server."/user/login");
+        header("Location: ".$server.$url);
     }
 
     private function serverUrl(){
