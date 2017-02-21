@@ -12,10 +12,7 @@ class MainController extends BaseController
         $that = $this;
 
         $this->get('/main', function($urlParams) use ( &$that){
-           
-            echo $that->request->redirectTo("/bla/bla/bla");
-            die();
-            
+
             $that->prepareDataForMainPage();
             $that->showView("MainView");
         });
