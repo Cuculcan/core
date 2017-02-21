@@ -34,7 +34,7 @@ class MainView extends AView
     }
 
     protected function setAdditionalJS(){
-        array_push($this->additionalJS, '/public/js/main-page.js');
+        array_push($this->additionalJS, '/public/js/main.js');
     }
 
     protected function setCustomHeaders(){
