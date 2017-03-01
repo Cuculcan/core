@@ -26,60 +26,54 @@ abstract class AController
     }
     abstract protected function setActions();
 
-    public function processRequest()
-    {
+    public function processRequest() {
         try {
             $this->setActions();
 
+            if (!$this->isProcessed) {
+                //can't find the right processor
+                throw new BadRequestException("Bad request parameters!");
+            }
+            
         } catch (InternalException $e) {
-            $this->showError("500", $e->getMessage() );
-            exit;
-
+            $this->showError("500", $e->getMessage());
+            
         } catch (BadRequestException $e) {
-            $this->showError("400", $e->getMessage() );
-            exit;
-
-        }  catch (ForbiddentException $e) {
-            $this->showError("403", $e->getMessage() );
-            exit;
-
+            $this->showError("400", $e->getMessage());
+            
+        } catch (ForbiddentException $e) {
+            $this->showError("403", $e->getMessage());
+            
         } catch (UnauthorizedException $e) {
-            if($e->isSowError){
-                $this->showError("401", $e->getMessage() );
-                exit;
+            
+            if ($e->isSowError) {
+                $this->showError("401", $e->getMessage());
+            }else{
+                $redirectTo = "";
+                if (isset($e->redirectUrl) && $e->redirectUrl != "") {
+                    $redirectTo = "?redirect=" . $e->redirectUrl;
+                }
+                
+                global $config;
+                header("Location: " . $config['common']['login_url'] . $redirectTo);
             }
-
-            $redirectTo = "";
-            if(isset($e->redirectUrl) &&  $e->redirectUrl!=""){
-                $redirectTo = "?redirect=".$e->redirectUrl;
-            }
-
-            global $config;
-            header("Location: ".$config['common']['login_url'].$redirectTo);
-            exit;
+        } finally {
+            $this->closeDBConnection();
         }
-
-        if (!$this->isProcessed) {
-            $this->showError("400", "Bad request parameters!" );
-            exit;
-        }
-
-        $this->closeDBConnection();
     }
 
-    protected function showView($viewClass, $parameters = null)
-    {
-        
+    protected function showView($viewClass, $parameters = null) {
+
         $viewData = [];
         if (isset($parameters) && is_array($parameters)) {
             $viewData = $parameters;
-        }else{
+        } else {
             $viewData = $this->model;
         }
 
         //set mandatory modelData for all Views  
         $viewData['session_user'] = $this->sessionUser;
-        
+
         if (!class_exists($viewClass)) {
             throw new InternalException("View class \"" . $viewClass . "\" not found ! ");
         }
