@@ -1,7 +1,7 @@
 <?php
 
 $config = [
-    //настройки соединения с MySql
+    //mysql connection parameters
     'db' => [
         'server' => '127.0.0.1',
         'user' => 'root',

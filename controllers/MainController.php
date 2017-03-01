@@ -1,4 +1,13 @@
 <?php
+/**
+ * Controller for process site root url
+ * 
+ * if domain name example.com 
+ * controller process urls like a
+ * http://example.com or  http://example.com/main which is same
+ * 
+ * !! must be present in all projects !!
+ */
 
 include 'controllers/base/BaseController.php';
 class MainController extends BaseController

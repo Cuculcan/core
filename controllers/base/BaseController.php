@@ -1,8 +1,8 @@
 <?php
 /**
- * контроллер реализует общее поведение для всех контроллеров
- * например: сессии пользователей
- * зависит от конкретного проекта
+ * Controller implements the common behavior for all controllers
+ * For example: user session
+ * It depends on the specific project
  *
  */
 include 'core/AController.php';
@@ -19,27 +19,27 @@ abstract class BaseController extends AController{
     
     private function initSessionUser() {
 
-        //если сессия пустая
+        //if session is empty
         if(!isset($_SESSION['USER_ID'])){
             $this->sessionUser = null;
             return;
         }
 
-        //если не совпадает HTTP_USER_AGENT
+        //if  HTTP_USER_AGENT not identical
         if (!isset($_SESSION['HTTP_USER_AGENT']) || $_SESSION['HTTP_USER_AGENT'] != md5($_SERVER['HTTP_USER_AGENT'])) {
             $this->sessionUser = null;
             return;
         }
 
-        //находим пользователя в БД
+        //find user into Database
         $user = $this->getUserWithId($_SESSION['USER_ID']);
-        //если не нашли
+        
         if(!isset($user)) {
             $this->sessionUser = null;
             return;
         }
 
-        //заполняем данные пользователя
+        //fill user data
         $this->sessionUser = array(
             "id"=> $_SESSION['USER_ID'],
             "name"=>$user['name'],
@@ -78,7 +78,7 @@ abstract class BaseController extends AController{
     protected function checkAuthorization($redirect=""){
         if($this->sessionUser == null) {
             if($this->request->isAjax || $this->request->method!="GET"){
-                throw new UnauthorizedException("", true, "401 - пользователь не авторизован ");
+                throw new UnauthorizedException("", true, "401 - Unauthorized ");
             }
             else{
                 $redirectUrl = (isset($redirect) && $redirect!="")? $redirect : $this->request->requestUri;

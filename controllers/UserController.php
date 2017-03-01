@@ -1,4 +1,13 @@
 <?php
+/**
+ * Controller for process urls which beginning with /user
+ *
+ * If domain name example.com 
+ * controller will process urls like a
+ * http://example.com/user
+ * 
+ * 
+ */
 
 include 'controllers/base/BaseController.php';
 
