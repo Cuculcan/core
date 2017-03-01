@@ -20,7 +20,7 @@ abstract class AController
         $this->isProcessed = false;
         $this->documentRoot = $_SERVER["DOCUMENT_ROOT"];
        
-         //создаем соединение с БД
+        //initialize database connection
         global $config;
         $this->db = new MySQLClass($config['db']['server'], $config['db']['user'], $config['db']['pass'], $config['db']['name']);
     }
@@ -69,17 +69,22 @@ abstract class AController
 
     protected function showView($viewClass, $parameters = null)
     {
-        //Добавляем обязательные параметры въюшки
-        if (!isset($parameters) || !is_array($parameters)) {
-            $parameters = $this->model;
+        
+        $viewData = [];
+        if (isset($parameters) && is_array($parameters)) {
+            $viewData = $parameters;
+        }else{
+            $viewData = $this->model;
         }
-        $parameters['session_user'] = $this->sessionUser;
+
+        //set mandatory modelData for all Views  
+        $viewData['session_user'] = $this->sessionUser;
         
         if (!class_exists($viewClass)) {
             throw new InternalException("View class \"" . $viewClass . "\" not found ! ");
         }
 
-        $view = new $viewClass($parameters);
+        $view = new $viewClass($viewData);
         $view->render();
     }
 
