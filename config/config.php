@@ -15,5 +15,9 @@ $config = [
         'login_url'=> '/user/login'
     ],
 
+    'langueges'=>[
+        'default'=>'ru',
+        'supported'=>['ru','en','fr','de','ch']
+    ]
   
 ];

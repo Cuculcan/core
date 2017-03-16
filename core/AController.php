@@ -14,6 +14,8 @@ abstract class AController
     
     protected $model = [];
     
+    protected $languege;
+    
     public function __construct($request , $name) {
         $this->request = $request;
         $this->controllerName = $name;
@@ -73,6 +75,7 @@ abstract class AController
 
         //set mandatory modelData for all Views  
         $viewData['session_user'] = $this->sessionUser;
+        $viewData['languege'] = $this->getLanguege();
 
         if (!class_exists($viewClass)) {
             throw new InternalException("View class \"" . $viewClass . "\" not found ! ");
@@ -188,5 +191,13 @@ abstract class AController
     {
         $this->controllerName = $controllerName;
     }
+    public function getLanguege() {
+        return $this->languege;
+    }
+
+    public function setLanguege($languege) {
+        $this->languege = $languege;
+    }
+
 
 }

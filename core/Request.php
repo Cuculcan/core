@@ -109,4 +109,30 @@ class Request
        
         return $protocol . "://" . $_SERVER['HTTP_HOST'];
     }
+    
+    function getUrlElements() {
+        return $this->urlElements;
+    }
+
+    function getIsAjax() {
+        return $this->isAjax;
+    }
+
+    function getHeaders() {
+        return $this->headers;
+    }
+
+    function setUrlElements($urlElements) {
+        $this->urlElements = $urlElements;
+    }
+
+    function setIsAjax($isAjax) {
+        $this->isAjax = $isAjax;
+    }
+
+    function setHeaders($headers) {
+        $this->headers = $headers;
+    }
+
+
 }
