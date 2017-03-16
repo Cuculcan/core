@@ -18,12 +18,11 @@ class MainController extends BaseController
     }
 
     protected function setActions() {
-        $that = $this;
+      
+        $this->get('/main', function($urlParams){
 
-        $this->get('/main', function($urlParams) use ( &$that){
-
-            $that->prepareDataForMainPage();
-            $that->showView("MainView");
+            $this->prepareDataForMainPage();
+            $this->showView("MainView");
         });
         
     }
