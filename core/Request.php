@@ -88,6 +88,9 @@ class Request
 
         return null;
     }
+    public function getQueryParameters() {
+        return $this->queryParameters;
+    }
 
     public function getQueryParameter($name, $default=null){
         return (isset($this->queryParameters[$name])) ? $this->queryParameters[$name] : $default;
