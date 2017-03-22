@@ -7,6 +7,7 @@ Consists of two types of classes:
 
 The **Model** implementation depends on the particular progect design and has no base classes in the framework, yet
 
+### Контроллеры
 Контроллеры предназначены для обработки входящих запросов
 
 Любой запрос к сайту проходит через .htaccess и направляется в  index.php  
