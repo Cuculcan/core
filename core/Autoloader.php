@@ -1,8 +1,8 @@
 <?php
 //===============autoloader===========================
 
-spl_autoload_register('rus_cars_autoload');
-function rus_cars_autoload($classname)
+spl_autoload_register('core_autoload');
+function core_autoload($classname)
 {
     $documentRoot = $_SERVER["DOCUMENT_ROOT"];
     $classFile = "";
