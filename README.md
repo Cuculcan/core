@@ -1,4 +1,4 @@
-# CORE
+# CORE - refactor
 Small simple PHP MVC RESTlike framework for training purposes
 
 ## MVC
