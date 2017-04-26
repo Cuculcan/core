@@ -1,0 +1,16 @@
+{
+    "name": "cuculcan/core",
+    "description": "tiny php framework",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Lexa",
+            "email": "alnazarr@gmail.com"
+        }
+    ],
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "5.7"
+    }
+}

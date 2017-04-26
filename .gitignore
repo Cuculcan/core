@@ -1,2 +1,7 @@
 nbproject/
 session/
+
+/vendor/
+
+#
+config/config.php
