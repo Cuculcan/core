@@ -10,6 +10,8 @@ class Application {
     }
 
     public function run() {
+        echo "pew-pew!!!!";
+       // return;
         //prepare request data
         $request = new Request();
        
