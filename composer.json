@@ -17,9 +17,10 @@
         "mockery/mockery": "^0.9.9"
     },
     "autoload": {
-        "psr-0": {
-            "Cuculcan\\Core": "src/",
-            "Example\\": ""
+        "psr-4": {
+            "Cuculcan\\Core\\": "src/Cuculcan/Core",
+            "Example\\": "Example"
         }
+        
     }
 }
