@@ -1,6 +1,7 @@
 <?php
 
-require "src/Cuculcan/Core/autoload.php";
+//require "src/Cuculcan/Core/autoload.php";
+require 'vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cuculcan\Core\Request;

@@ -1,11 +1,9 @@
 <?php
-require "src/Cuculcan/Core/autoload.php";
-require "Example/autoload.php";
 
-//подключаем нужные классы
+require 'vendor/autoload.php';
+
 require 'config/config.php';
-
-require_once 'third-party/log4php-2.3.0/php/Logger.php';
+require 'third-party/log4php-2.3.0/php/Logger.php';
 Logger::configure('config/log4php-config.xml');
 
 use PHPUnit\Framework\TestCase;
@@ -28,11 +26,6 @@ class ApplicationTest extends TestCase{
         $requestMoc->shouldReceive('render')
             ->never()
             ->andReturn('rendered!');
-        
-        
-        $app = new Application("Example");
-        $this->assertNotNull($app);
-        $app->run();
         
     }
     

@@ -18,14 +18,6 @@ require 'config/config.php';
 require 'third-party/log4php-2.3.0/php/Logger.php';
 Logger::configure('config/log4php-config.xml');
 
-$loader = new \Composer\Autoload\ClassLoader();
-// register classes with namespaces
-$loader->add('Cuculcan\Core', __DIR__."/src");
-$loader->add('Example',      __DIR__.'/');
-
-// activate the autoloader
-$loader->register();
-
 use Cuculcan\Core\Application;
 
 (new Application("Example"))->run();
