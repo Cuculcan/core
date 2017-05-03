@@ -1,22 +1,19 @@
 <?php
-
 namespace Example\Views;
 
 use Cuculcan\Core\AView;
 
-class MainView extends AView
+class UserView extends AView
 {
     public function __construct($model) {
         parent::__construct();
         $this->model = $model;
     }
 
-    protected function setTemplateName()
-    {
-        $this->templateName = '/Example/Views/templates/main.php';
+    protected function setTemplateName(){
+        $this->templateName = '/src/Example/views/templates/user.php';
     }
 
-    //---------------------------------блок для SEO --------------------------------
     protected function setTitle(){
         $this->title = "";
     }
@@ -28,15 +25,13 @@ class MainView extends AView
     protected function setDescription(){
         $this->description="";
     }
-    //----------------------------------------------------------------------------
-    
+
     protected function setAdditionalCSS(){
-        array_push($this->additionalCSS, 'Example/web/css/main.css');
 
     }
 
     protected function setAdditionalJS(){
-        array_push($this->additionalJS, 'Example/web/js/main.js');
+
     }
 
     protected function setCustomHeaders(){

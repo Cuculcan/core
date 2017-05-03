@@ -18,7 +18,7 @@
     "autoload": {
         "psr-4": {
             "Cuculcan\\Core\\": "src/Cuculcan/Core",
-            "Example\\": "Example"
+            "Example\\": "src/Example"
         }
         
     }
