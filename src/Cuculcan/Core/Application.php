@@ -20,7 +20,7 @@ class Application {
         $controller = $router->getController();
         if(!$controller){
             $errorController = new ErrorController($request, $this->projectNamespace);
-            $errorController->showErrorPage("404", "It would be nice to have such a page. But this page does not exist!");
+            $errorController->showErrorPage("404", "");
             exit;
         }
 

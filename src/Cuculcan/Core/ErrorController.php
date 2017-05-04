@@ -3,11 +3,11 @@ namespace Cuculcan\Core;
 
 class ErrorController
 {
-    private $projectNamespace;
+    private $viewNamespace;
     
     public function __construct($request, $projectNamespace)
     {
-        $this->projectNamespace = $projectNamespace."\\Views\\";
+        $this->viewNamespace = $projectNamespace."\\Views\\";
     }
 
     public function showErrorPage($type, $error, $isAjax = false)
@@ -23,7 +23,7 @@ class ErrorController
     protected function renderErrorView($type, $error)
     {
         ob_clean();
-        $errorView = $this->projectNamespace."Error".$type."View";
+        $errorView = $this->viewNamespace."Error".$type."View";
         $view  = new $errorView(['error' => $error]);
         $view->render();
     }
