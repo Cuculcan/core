@@ -21,12 +21,19 @@ class ApplicationTest extends TestCase{
     
      public function testShouldRun(){
          
-        //$requestMoc = m::mock('overload:Cuculcan\Core\Aview', function($mock){$mock->shouldIgnoreMissing();});
-        $requestMoc = m::mock('overload:Cuculcan\Core\Aview');
-        $requestMoc->shouldReceive('render')
-            ->never()
-            ->andReturn('rendered!');
-        
+        $controllerMoc = m::mock(\Cuculcan\Core\AController::class); 
+        $controllerMoc->shouldReceive('processRequest')
+            ->once()
+            ->andReturn('done!');
+         
+         
+        $routerMoc = m::mock('overload:Cuculcan\Core\Router');
+        $routerMoc->shouldReceive('getController')
+            ->once()
+            ->andReturn($controllerMoc);
+
+       (new Application("Example"))->run();
+         
     }
     
 }
