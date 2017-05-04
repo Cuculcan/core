@@ -12,7 +12,9 @@ class Request
     public $isAjax;
     public $headers;
 
-    public function __construct() {
+    private $inpitStream = 'php://input';
+    
+    public function __construct($inpitStream = 'php://input') {
         $this->method = $_SERVER['REQUEST_METHOD'];
 
         $urlElements = null;
@@ -20,23 +22,14 @@ class Request
             $this->urlElements = explode('/', rtrim($_GET['handler'], "/"));
         }
 
+        $this->inpitStream = $inpitStream;
         $this->parseIncomingParams();
-
-        // initialise json as default format
-        $this->format = 'json';
-        if(isset($this->parameters['format'])) {
-            $this->format = $this->parameters['format'];
-        }
-
         $this->isAjax = $this->isAJAX();
-
-       
         $this->headers = $this->getAllHeaders();
-
         $this->requestUri = $_SERVER['REQUEST_URI'];
     }
 
-    public function parseIncomingParams() {
+    private function parseIncomingParams() {
         $parameters = array();
 
         // first of all, pull the GET vars
@@ -46,14 +39,18 @@ class Request
         }
 
         // now how about PUT/POST bodies? These override what we got from GET
-        $body = file_get_contents("php://input");
+        $body = file_get_contents($this->inpitStream);
+        
         $content_type = false;
         if(isset($_SERVER['CONTENT_TYPE'])) {
             $content_type = $_SERVER['CONTENT_TYPE'];
         }
 
+        // initialise json as default format
+        $this->format = 'json';
+        
         if(strpos($content_type, "application/json") !== false){
-            $body_params = json_decode($body);
+            $body_params = json_decode($body, true);
             if($body_params) {
                 foreach($body_params as $param_name => $param_value) {
                     $parameters[$param_name] = $param_value;
