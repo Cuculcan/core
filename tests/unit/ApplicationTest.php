@@ -1,9 +1,9 @@
 <?php
 
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
-require 'config/config.php';
-require 'third-party/log4php-2.3.0/php/Logger.php';
+require_once 'config/config.php';
+require_once 'third-party/log4php-2.3.0/php/Logger.php';
 Logger::configure('config/log4php-config.xml');
 
 use PHPUnit\Framework\TestCase;
@@ -13,6 +13,13 @@ use Cuculcan\Core\Application;
 
 class ApplicationTest extends TestCase{
     
+    
+    public function setUp()
+    {
+        $_SERVER['REQUEST_METHOD'] = "GET";
+        $_SERVER['REQUEST_URI']="";
+        parent::setUp();
+    }
     
     public function testShouldExistApplicationObject(){
         $app = new Application("Example");

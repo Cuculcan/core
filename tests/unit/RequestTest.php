@@ -1,7 +1,7 @@
 <?php
 
 //require "src/Cuculcan/Core/autoload.php";
-require 'vendor/autoload.php';
+require_once 'vendor/autoload.php';
 
 use PHPUnit\Framework\TestCase;
 use Cuculcan\Core\Request;
@@ -9,7 +9,13 @@ use Cuculcan\Core\Request;
 
 class RequestTest extends TestCase{
     
-    
+    public function setUp()
+    {
+        $_SERVER['REQUEST_METHOD'] = "GET";
+        $_SERVER['REQUEST_URI']="";
+        parent::setUp();
+    }
+
     public function testRequestConstructShouldSetMethod(){
     
         $_SERVER['REQUEST_METHOD'] = "GET";
