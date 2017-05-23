@@ -34,7 +34,7 @@
     <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
     
     <!--глобальные стили-->
-    <link href="/web/css/layout.css" rel="stylesheet" type="text/css" />
+    <link href="/css/layout.css" rel="stylesheet" type="text/css" />
     <!--дополнительные стили-->
     <?php
     if ($this->additionalCSS) {
@@ -45,7 +45,7 @@
     ?>
 
     <!--глобальные скрипты-->
-    <script src="/web/js/jquery.min.js" type="text/javascript"></script>
+    <script src="/js/jquery.min.js" type="text/javascript"></script>
     <!--дополнительные скрипты-->
     <?php
     if ($this->additionalJS) {

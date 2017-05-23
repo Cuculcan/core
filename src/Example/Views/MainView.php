@@ -13,7 +13,7 @@ class MainView extends AView
 
     protected function setTemplateName()
     {
-        $this->templateName = '/src/Example/Views/templates/main.php';
+        $this->templateName = '/../src/Example/Views/templates/main.php';
     }
 
     //---------------------------------блок для SEO --------------------------------
@@ -31,12 +31,12 @@ class MainView extends AView
     //----------------------------------------------------------------------------
     
     protected function setAdditionalCSS(){
-        array_push($this->additionalCSS, 'web/css/main.css');
+        array_push($this->additionalCSS, '/css/main.css');
 
     }
 
     protected function setAdditionalJS(){
-        array_push($this->additionalJS, 'web/js/main.js');
+        array_push($this->additionalJS, '/js/main.js');
     }
 
     protected function setCustomHeaders(){

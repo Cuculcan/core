@@ -8,7 +8,7 @@ abstract class Entity implements Interfaces\EntityInterface
 {
 
     protected $fields;
-    
+
     public function export()
     {
         return $this->fields;
@@ -37,8 +37,28 @@ abstract class Entity implements Interfaces\EntityInterface
     private function checkFieldExist($fieldName)
     {
         if (!isset($this->fields[$fieldName])) {
-            throw new InternalException("Field '" . $fieldName . "' not found in object ".static::class);
+            throw new InternalException("Field '" . $fieldName . "' not found in object " . static::class);
         }
+    }
+
+    public function fieldsFromAttributes()
+    {
+        $sClass = get_called_class(); // unavailable in PHP < 5.3.0
+        $rflClass = new ReflectionClass($sClass);
+
+        $mapFields = [];
+
+        foreach ($rflClass->getProperties() as $rflProperty) {
+            $sComment = $rflProperty->getDocComment();
+            if (preg_match_all('%^\s*\*\s*@field\s*$%im', $sComment, $result, PREG_PATTERN_ORDER)) {
+                $prop = $rflProperty->GetName();
+                $value = $this->$prop;
+
+                $mapFields[$prop] = $value;
+            }
+        }
+
+        return $mapFields;
     }
 
 }
