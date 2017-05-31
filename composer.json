@@ -10,6 +10,7 @@
         }
     ],
     "require": {
+        "apache/log4php": "^2.3"
     },
     "require-dev": {
         "phpunit/phpunit": "5.7",

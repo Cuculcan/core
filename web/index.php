@@ -14,7 +14,7 @@ date_default_timezone_set("Europe/Moscow");
 
 require(__DIR__ . '/../vendor/autoload.php');
 require(__DIR__ . '/../config/config.php');
-require(__DIR__ . '/../third-party/log4php-2.3.0/php/Logger.php');
+//require(__DIR__ . '/../third-party/log4php-2.3.0/php/Logger.php');
 Logger::configure(__DIR__ . '/../config/log4php-config.xml');
 
 

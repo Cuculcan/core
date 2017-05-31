@@ -83,6 +83,6 @@ abstract class AView
 
         include $this->documentRoot.$this->templateName;
 
-
+    
     }
 }
