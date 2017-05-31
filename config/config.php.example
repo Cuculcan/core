@@ -12,7 +12,8 @@ $config = [
     
     'common' => [
         'file_storage' => '/var/www/images', 
-        'login_url'=> '/user/login'
+        'login_url'=> '/user/login',
+        'template_path'=>'/../src/Example/Views/templates'
     ],
 
     'langueges'=>[

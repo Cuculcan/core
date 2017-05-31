@@ -64,8 +64,6 @@ abstract class AView
     protected function setLanguage(){
     }
 
-
-
     public function render(){
 
         $this->setCustomHeaders();
@@ -82,7 +80,11 @@ abstract class AView
         $this->setLanguage();
 
         include $this->documentRoot.$this->templateName;
-
+    }
     
+    public function import($templateName)
+    {
+        global $config;
+        include $this->documentRoot.$config['common']['template_path'].$templateName;
     }
 }
