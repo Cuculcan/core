@@ -3,7 +3,6 @@
 require_once 'vendor/autoload.php';
 
 require_once 'config/config.php';
-require_once 'third-party/log4php-2.3.0/php/Logger.php';
 Logger::configure('config/log4php-config.xml');
 
 use PHPUnit\Framework\TestCase;
