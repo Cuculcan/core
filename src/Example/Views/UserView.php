@@ -11,7 +11,7 @@ class UserView extends AView
     }
 
     protected function setTemplateName(){
-        $this->templateName = '/../src/Example/Views/templates/user.php';
+        $this->templateName = '/user.php';
     }
 
     protected function setTitle(){

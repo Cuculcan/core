@@ -13,7 +13,7 @@ class Error401View extends AView
 
     protected function setTemplateName(){
         //TODO сделать правильный шаблон
-        $this->templateName = '/../src/Example/Views/errors/500.php';
+        $this->templateName = '/errors/500.php';
     }
 
     protected function setTitle(){
