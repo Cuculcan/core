@@ -13,7 +13,7 @@ class MainView extends AView
 
     protected function setTemplateName()
     {
-        $this->templateName = '/../src/Example/Views/templates/main.php';
+        $this->templateName = '/main.php';
     }
 
     //---------------------------------блок для SEO --------------------------------

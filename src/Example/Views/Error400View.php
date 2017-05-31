@@ -12,7 +12,7 @@ class Error400View extends AView
     }
 
     protected function setTemplateName(){
-        $this->templateName = '/views/errors/400.php';
+        $this->templateName = '/errors/400.php';
     }
 
     protected function setTitle(){

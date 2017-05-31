@@ -81,8 +81,12 @@ abstract class AView
         $this->setTemplateName();
         $this->setLanguage();
 
-        include $this->documentRoot.$this->templateName;
-
-
+        $this->import($this->templateName);
+    }
+    
+    public function import($templateName)
+    {
+        global $config;
+        include $this->documentRoot.$config['common']['template_path'].$templateName;
     }
 }

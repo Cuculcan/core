@@ -29,8 +29,16 @@ class MainController extends BaseController
 
         $this->get('/main', function($urlParams) {
 
-            $this->prepareDataForMainPage();
-            $this->showView("MainView");
+//            $this->prepareDataForMainPage();
+//            $this->showView("MainView");
+            
+            echo json_encode([
+                'aaa'=>'ololo',
+                'bbb'=> htmlspecialchars("<p>bskdjaslkd</p>"),
+                'ccc'=>htmlspecialchars('<a href="zzzzz">pew-pew</a>')
+            ]);
+            
+        
         });
     }
 
