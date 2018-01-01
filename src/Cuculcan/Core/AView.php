@@ -81,10 +81,23 @@ abstract class AView
 
         $this->import($this->templateName);
     }
-    
-    public function import($templateName)
+
+    public function import($templateName, $values = [])
     {
+        foreach($values AS $key=>$value) {
+            $$key = $value;
+        }
+
         global $config;
         include $this->documentRoot.$config['common']['template_path'].$templateName;
+    }
+
+    public function renderText($templateName, $values = [])
+    {
+        ob_start();
+        $this->import($templateName, $values);
+        $content = ob_get_contents();
+        ob_end_clean();
+        return $content;
     }
 }

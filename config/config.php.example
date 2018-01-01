@@ -9,6 +9,14 @@ $config = [
         'name' => 'test1'
     ],
 
+    //sphinx connection parameters
+    'sphinx' => [
+        'server' => '127.0.0.1',
+        'user' => 'sphinx-user-name',
+        'pass' => 'XXXXXXXXXXXXXXXXXXXX',
+        'name' => 'db_name'
+    ],
+
     
     'common' => [
         'file_storage' => '/var/www/images', 
@@ -16,7 +24,7 @@ $config = [
         'template_path'=>'/../src/Example/Views/templates'
     ],
 
-    'langueges'=>[
+    'languages'=>[
         'default'=>'ru',
         'supported'=>['ru','en','fr','de','ch']
     ]

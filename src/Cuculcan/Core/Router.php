@@ -15,10 +15,10 @@ class Router
     public function getController(){
         // route the request to the right place
         $controller_name ="";
-        $namespace = $this->projectNamespace."\Controllers";
+        $namespace = $this->projectNamespace."\\Controllers";
         
         global $config;
-        $languege = $this->detectLanguge( $config['langueges']['supported'], $config['langueges']['default']);
+        $language = $this->detectLanguge($config['languages']['supported'], $config['languages']['default']);
         
         $urlElementsLength = count($this->request->urlElements);
         if($urlElementsLength > 0){
@@ -57,7 +57,7 @@ class Router
         }
         
         $controller =  new $controller_name($this->request, $this->projectNamespace);
-        $controller->setLanguege($languege);
+        $controller->setLanguage($language);
         return $controller;
     }
     

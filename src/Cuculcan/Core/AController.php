@@ -4,29 +4,46 @@ namespace Cuculcan\Core;
 use Cuculcan\Core\ErrorController;
 use Cuculcan\Core\Errors\BadRequestException;
 use Cuculcan\Core\Errors\InternalException;
+use Datetime;
+use Cuculcan\Core\Request;
+use Cuculcan\Core\Errors\UnauthorizedException;
+use Cuculcan\Core\Errors\ForbiddentException;
 
 abstract class AController
 {
     protected $db;
+    /**
+     *
+     * @var Request 
+     */
     protected $request;
     protected $isProcessed;
     protected $log;
     protected $sessionUser;
+    protected $sessionUserTimezone;
+    protected $sessionDirectorUser;
+    protected $sessionDirectorUserTimezone;
     protected $model = [];
-    protected $languege;
+    protected $language;
     
     private $projectNamespace;
 
-
-    public function __construct($request , $namespace) {
+    public function __construct($request, $namespace)
+    {
         $this->request = $request;
         $this->projectNamespace = $namespace;
         $this->isProcessed = false;
-       
-        //initialize database connection
+
         global $config;
-        $this->db = new MySQLClass($config['db']['server'], $config['db']['user'], $config['db']['pass'], $config['db']['name']);
+
+        $host = $config['db']['server'];
+        $dbname = $config['db']['name'];
+        $user = $config['db']['user'];
+        $pass = $config['db']['pass'];
+        $this->db = new \PDO("mysql:host=$host;dbname=$dbname", $user, $pass);
+        $this->db->query('SET NAMES utf8mb4');
     }
+
     abstract protected function setActions();
 
     public function processRequest() {
@@ -65,6 +82,16 @@ abstract class AController
         }
     }
 
+    protected function getDateFromString($dateString) {
+
+        $date = $dateString ? $dateString : '';
+        $date = $date!='' ? explode('.', $date) : array();
+        $date = count($date)==3 ? new DateTime($date[1].'/'.$date[0].'/'.$date[2]) : false;
+        $date = $date ? intval($date->format('U')) : 0;
+
+        return $date;
+    }
+
     protected function showView($viewClass, $parameters = null) {
 
         $viewData = [];
@@ -76,7 +103,7 @@ abstract class AController
 
         //set mandatory modelData for all Views  
         $viewData['session_user'] = $this->sessionUser;
-        $viewData['languege'] = $this->getLanguege();
+        $viewData['language'] = $this->getLanguage();
 
         $viewClass = $this->projectNamespace."\\Views\\".$viewClass;
         if (!class_exists( $viewClass)) {
@@ -93,9 +120,10 @@ abstract class AController
     }
 
     private function closeDBConnection(){
-        if ($this->db) {
-            $this->db->Close();
-        }
+//        if ($this->db) {
+//            $this->db->Close();
+//        }
+        $this->db = null;
     }
 
     public function get($requestTemplate, $action){
@@ -178,12 +206,12 @@ abstract class AController
         $this->request = $request;
     }
    
-    public function getLanguege() {
-        return $this->languege;
+    public function getLanguage() {
+        return $this->language;
     }
 
-    public function setLanguege($languege) {
-        $this->languege = $languege;
+    public function setLanguage($language) {
+        $this->language = $language;
     }
 
 

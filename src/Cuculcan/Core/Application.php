@@ -5,11 +5,13 @@ namespace Cuculcan\Core;
 class Application {
 
     private $projectNamespace;
+
     public function __construct($projectNamespace) {
         $this->projectNamespace = $projectNamespace;
     }
 
     public function run() {
+
         //prepare request data
         $request = new Request();
        
@@ -27,5 +29,4 @@ class Application {
         //process request
         $controller->processRequest();
     }
-
 }

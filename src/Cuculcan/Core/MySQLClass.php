@@ -11,7 +11,7 @@ class MySQLClass {
     private $database = '';
     private $result = 0;
 
-    function MySQLClass($h, $u, $p, $db) {
+    public function __construct($h, $u, $p, $db) {
         $this->host = $h;
         $this->user = $u;
         $this->password = $p;
