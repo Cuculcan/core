@@ -1,6 +1,12 @@
 # CORE - refactor
 Small simple PHP MVC RESTlike framework for training purposes
 
+## installation
+```
+composer create-project cuculcan/core
+```
+
+
 ## MVC
 Consists of two types of classes:
 **Controllers** and **Views**.
