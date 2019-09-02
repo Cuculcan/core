@@ -13,14 +13,15 @@ class Request
     public $headers;
 
     private $inpitStream = 'php://input';
-    
+
     public function __construct($inpitStream = 'php://input') {
         $this->method = $_SERVER['REQUEST_METHOD'];
 
-        $urlElements = null;
+        $this->urlElements = [];
         if(isset($_GET) && count($_GET)>0 &&  isset($_GET['handler'])) {
-            $this->urlElements = explode('/', rtrim($_GET['handler'], "/"));
+            $this->urlElements = explode('/', rtrim($_GET['handler'], '/'));
         }
+
 
         $this->inpitStream = $inpitStream;
         $this->parseIncomingParams();
@@ -30,17 +31,18 @@ class Request
     }
 
     private function parseIncomingParams() {
+
         $parameters = array();
 
         // first of all, pull the GET vars
-        if (isset($_SERVER['QUERY_STRING'])) {
+        if(isset($_SERVER['QUERY_STRING'])) {
             parse_str($_SERVER['QUERY_STRING'], $parameters);
             unset($parameters['handler']);
         }
 
         // now how about PUT/POST bodies? These override what we got from GET
         $body = file_get_contents($this->inpitStream);
-        
+
         $content_type = false;
         if(isset($_SERVER['CONTENT_TYPE'])) {
             $content_type = $_SERVER['CONTENT_TYPE'];
@@ -48,36 +50,37 @@ class Request
 
         // initialise json as default format
         $this->format = 'json';
-        
-        if(strpos($content_type, "application/json") !== false){
+
+        if(strpos($content_type, 'application/json') !== false) {
             $body_params = json_decode($body, true);
             if($body_params) {
-                foreach($body_params as $param_name => $param_value) {
+                foreach($body_params AS $param_name=>$param_value) {
                     $parameters[$param_name] = $param_value;
                 }
             }
-            $this->format = "json";
+            $this->format = 'json';
         }
 
-        if(strpos($content_type, "application/x-www-form-urlencoded") !== false){
+        if(strpos($content_type, 'application/x-www-form-urlencoded') !== false) {
             parse_str($body, $postvars);
-            foreach($postvars as $field => $value) {
+            foreach($postvars AS $field=>$value) {
                 $parameters[$field] = $value;
 
             }
-            $this->format = "html";
+            $this->format = 'html';
         }
+
         $this->queryParameters = $parameters;
     }
 
     function isAJAX() {
         return isset($_SERVER['HTTP_X_REQUESTED_WITH']) AND  strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-
     }
 
-    function getHeaderWithName($headerName){
-        foreach($this->headers as $name => $value){
-            if(strtolower($headerName) == strtolower($name) ){
+    function getHeaderWithName($headerName) {
+
+        foreach($this->headers AS $name=>$value) {
+            if(strtolower($headerName) == strtolower($name)) {
                 return $value;
             }
         }
@@ -88,27 +91,27 @@ class Request
         return $this->queryParameters;
     }
 
-    public function getQueryParameter($name, $default=null){
+    public function getQueryParameter($name, $default = null) {
         return (isset($this->queryParameters[$name])) ? $this->queryParameters[$name] : $default;
     }
-    
-    public function redirectTo($url){
+
+    public function redirectTo($url) {
         $server = $this->serverUrl();
-        header("Location: ".$server.$url);
+        header('Location: '.$server.$url);
     }
 
-    private function serverUrl(){
-        $protocol ="";
-        if(isset($_SERVER['HTTPS'])){
-            $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != "off") ? "https" : "http";
+    private function serverUrl() {
+
+        if(isset($_SERVER['HTTPS'])) {
+            $protocol = ($_SERVER['HTTPS'] && $_SERVER['HTTPS'] != 'off') ? 'https' : 'http';
         }
-        else{
+        else {
             $protocol = 'http';
         }
-       
-        return $protocol . "://" . $_SERVER['HTTP_HOST'];
+
+        return $protocol . '://' . $_SERVER['HTTP_HOST'];
     }
-    
+
     function getUrlElements() {
         return $this->urlElements;
     }
@@ -132,14 +135,14 @@ class Request
     function setHeaders($headers) {
         $this->headers = $headers;
     }
-    
-    public function getAllHeaders(){
-        
-        if (!function_exists('getallheaders') && !function_exists('Cuculcan\Core\getallheaders')  ) {
+
+    public function getAllHeaders() {
+
+        if(!function_exists('getallheaders') && !function_exists('Cuculcan\Core\getallheaders')) {
             function getallheaders() {
                 $headers = [];
-                foreach ($_SERVER as $name => $value) {
-                    if (substr($name, 0, 5) == 'HTTP_') {
+                foreach($_SERVER AS $name=>$value) {
+                    if(substr($name, 0, 5) == 'HTTP_') {
                         $headers[str_replace(' ', '-', ucwords(strtolower(str_replace('_', ' ', substr($name, 5)))))] = $value;
                     }
                 }
@@ -147,13 +150,11 @@ class Request
             }
             return getallheaders();
         }
-        
+
         return getallheaders();
     }
 
     function getRequestUri() {
         return $this->requestUri;
     }
-
-
 }

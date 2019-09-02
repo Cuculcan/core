@@ -6,38 +6,49 @@ class Router
 {
     private $request;
     private $projectNamespace;
-    
-    public function __construct($request, $projectNamespace) {
+
+    public function __construct($request, $projectNamespace)
+    {
         $this->request = $request;
         $this->projectNamespace = $projectNamespace;
     }
 
-    public function getController(){
+    public function getController()
+    {
         // route the request to the right place
-        $controller_name ="";
-        $namespace = $this->projectNamespace."\\Controllers";
-        
+        $controller_name = "";
+        $namespace = $this->projectNamespace . "\\Controllers";
+
         global $config;
         $language = $this->detectLanguge($config['languages']['supported'], $config['languages']['default']);
-        
+
         $urlElementsLength = count($this->request->urlElements);
-        if($urlElementsLength > 0){
+        if ($urlElementsLength > 0) {
+
+            if (empty($this->request->urlElements[0]) && $urlElementsLength==1) {
+                $this->request->urlElements[0]="Main";
+            }
+            else if (empty($this->request->urlElements[0])) {
+                array_shift($this->request->urlElements);
+                $urlElementsLength--;
+            }
 
             $urlElementsLengthTest = $urlElementsLength;
-            for($i = 0; $i < $urlElementsLength; $i++){
+            for ($i = 0; $i < $urlElementsLength; $i++) {
+
                 $searcheded_controller_name = "";
-                for($j = 0; $j < $urlElementsLengthTest; $j++){
+                for ($j = 0; $j < $urlElementsLengthTest; $j++) {
 
                     $searcheded_controller_name .= ucfirst($this->request->urlElements[$j]);
-                    if($searcheded_controller_name == ""){
-                        $searcheded_controller_name="Main";
+                    if ($searcheded_controller_name == "") {
+                        $searcheded_controller_name = "Main";
                         $this->request->urlElements =  array('main');
                     }
                 }
 
-                $searcheded_controller_name .='Controller';
+                $searcheded_controller_name .= 'Controller';
 
-                $searcheded_controller_name = $namespace."\\".$searcheded_controller_name;
+                $searcheded_controller_name = $namespace . "\\" . $searcheded_controller_name;
                 if (class_exists($searcheded_controller_name)) {
                     $controller_name = $searcheded_controller_name;
 
@@ -46,44 +57,41 @@ class Router
 
                 $urlElementsLengthTest--;
             }
-        }
-        else{
-            $controller_name = $namespace."\\"."MainController";
+        } else {
+            $controller_name = $namespace . "\\" . "MainController";
             $this->request->urlElements =  array('main');
         }
 
         if (!$controller_name) {
             return null;
         }
-        
+
         $controller =  new $controller_name($this->request, $this->projectNamespace);
         $controller->setLanguage($language);
         return $controller;
     }
-    
-    private function detectLanguge( $supprted, $default){
-       $urlParts = $this->request->getUrlElements();
-       $urlLength = count($urlParts);
-       if($urlLength == 0){
-           return $default;
-       }
-       
-       $langPart = $urlParts[0];
-       if($langPart==""){
-           return $default;
-       }
-       
-       if(!in_array($langPart, $supprted)){
-           return $default;
-       }
-       
-       
-       array_shift($urlParts);
-       
-       $this->request->setUrlElements($urlParts);
-       return $langPart;
-       
+
+    private function detectLanguge($supprted, $default)
+    {
+        $urlParts = $this->request->getUrlElements();
+        $urlLength = count($urlParts);
+        if ($urlLength == 0) {
+            return $default;
+        }
+
+        $langPart = $urlParts[0];
+        if ($langPart == "") {
+            return $default;
+        }
+
+        if (!in_array($langPart, $supprted)) {
+            return $default;
+        }
+
+
+        array_shift($urlParts);
+
+        $this->request->setUrlElements($urlParts);
+        return $langPart;
     }
-
 }
-
