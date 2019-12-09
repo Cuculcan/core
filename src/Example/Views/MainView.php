@@ -16,7 +16,7 @@ class MainView extends AView
         $this->templateName = '/main.php';
     }
 
-    //---------------------------------блок для SEO --------------------------------
+    //--------------------------------- SEO --------------------------------
     protected function setTitle(){
         $this->title = "";
     }
@@ -40,7 +40,7 @@ class MainView extends AView
     }
 
     protected function setCustomHeaders(){
-        //array_push($this->customHeaders, "MY-PEW-HEADER: pew-pew-pew");
+        array_push($this->customHeaders, "MY-PEW-HEADER: pew-pew-pew");
     }
 
 }
