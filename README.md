@@ -260,7 +260,7 @@ class MainView extends AView
     protected function setTemplateName()
     {
         /*
-        * задается имя шаблона относительно пути указанному в config/config.php 
+        * the template name is set relative to the path specified in config/config.php
         */
         $this->templateName = '/main.php';
     }
